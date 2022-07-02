@@ -1,1 +1,1 @@
-# js_basic
+JS 기본기
