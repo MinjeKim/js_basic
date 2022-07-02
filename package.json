@@ -1,0 +1,29 @@
+{
+  "name": "js_basic",
+  "version": "1.0.0",
+  "description": "js 기본기",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinjeKim/js_basic.git"
+  },
+  "keywords": [
+    "js",
+    "basic"
+  ],
+  "author": "meeenj",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MinjeKim/js_basic/issues"
+  },
+  "homepage": "https://github.com/MinjeKim/js_basic#readme",
+  "devDependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.18",
+    "prettier": "^3.7.1"
+  }
+}
