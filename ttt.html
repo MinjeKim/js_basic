@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn1">btn1</button><button id="btn2">btn2</button>
+    <div id="result"></div>
+    <script>
+        const btn1 = document.querySelector("#btn1");
+        const btn2 = document.querySelector("#btn2");
+        const result = document.querySelector("#result");
+        btn1.addEventListener("click", function() {
+            result.innerText = this;
+        });
+        btn2.addEventListener("click", () => {
+            result.innerText = this;
+        });
+    </script>
+</body>
+</html>

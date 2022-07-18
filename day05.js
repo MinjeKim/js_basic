@@ -1,5 +1,7 @@
 // // function
 
+const { restart } = require("nodemon");
+
 // function hello() {
 //     return "Hello, World!";
 // }
@@ -129,27 +131,118 @@
 const kim = {
 	nid: 3,
 	addr: 'Pusan',
+    arr: [1, 2, 3, {aid: 1}, [10,20]],
 	oo: { id: 1, name: 'Hong', addr: { city: 'Seoul' } },
+    f1: function ff() { console.log("this is ff"); }
 };
 
+const kim2 = [
+    3,
+    'Pusan',
+    { id: 1, name: 'Hong', addr: { city: 'Seoul' } },
+    [{ id: 1 }, { id: 2 }],
+    function f1() { console.log("this is f1"); }
+  ];
+
+// const copyArray = function( arr ) {
+//     const new_arr = [];
+//     for (let i of arr) {
+//         if (Array.isArray(i)) {
+//             new_arr.push(copyArray(i));
+//         } else if (typeof i === "object") {
+//             new_arr.push(deepCopyObject(i));
+//         } else {
+//             new_arr.push(i);
+//         }
+//     }
+//     return new_arr;
+// }
+
 const deepCopyObject = (obj) => {
-    const newObj = {};
-    for (prop in obj) {
+    const newObj = (typeof obj === 'object' && Array.isArray(obj)) ? [] : {};  // 이걸 추가하면 copyArray를 안써도됨 ㄹㅇ개신기
+    for (const prop in obj) {
+        // if (Array.isArray(obj[prop])) {
+        //     // newObj[prop] = [...obj[prop]];
+        //     newObj[prop] = copyArray(obj[prop]);
+        // } else 
         if (typeof obj[prop] === "object") {
             newObj[prop] = deepCopyObject(obj[prop]);
         } else {
             newObj[prop] = obj[prop];
         }
     }
+
     return newObj;
 }
 
 const newKim = deepCopyObject(kim);
+const newKim2 = deepCopyObject(kim2);
+
+const kim3 = [1,2,3,4,4,5,'tta','hnhtta','ttqwea','ttasa'];
+const newKim3 = deepCopyObject(kim3);
+console.log(kim3, newKim3);
+
+// newKim
 newKim.addr = 'Daegu';
 newKim.oo.name = 'Kim';
 newKim.oo.addr.city = 'Daejeon';
+newKim.arr[3].aid = 100;
+newKim.arr[4][1] = 200;
+newKim.f1 = function ff() {console.log("this is ff2");}
+
+// newKim2
+newKim2[2].addr.city = 'Daegu';
+newKim2[1] = 'Jeju';
+newKim2[3][1].addr = 3;
+
 console.log(kim.addr !== newKim.addr, 
     kim.oo.name !== newKim.oo.name,
     kim.oo.addr.city !== newKim.oo.addr.city); // true, true, true면 통과!
 console.log(newKim, kim);
+console.log(newKim2, kim2);
 
+kim.f1();
+newKim.f1();
+
+// function deepCopyObject2(obj) {
+// 	const copyObj = {};
+// 	for (let k in obj) {
+// 		const tmpObj = obj[k];
+// 		console.log(k, tmpObj, typeof tmpObj);
+// 		// if (Array.isArray(tmpObj)) copyObj[k] = [...tmpObj];
+// 		if (Array.isArray(tmpObj)) copyObj[k] = copyArray(tmpObj);
+// 		else if (typeof tmpObj === 'object') copyObj[k] = deepCopyObject(tmpObj);
+// 		else copyObj[k] = obj[k];
+// 	}
+
+// 	return copyObj;
+// }
+
+
+const deepEqual = (obj1, obj2) => {
+    if (!obj1 || !obj2) return false;
+    
+    let key1 = Object.keys(obj1);
+    let key2 = Object.keys(obj2);
+    if (key1.length === key2.length) {
+        for (let i = 0; i < key1.length; i += 1) {
+            if (key1[i] !== key2[i] ) {
+                return false;
+            }
+        }
+    } else return false;
+    
+    for (let i of key1) {
+        let tempres = true;
+        if (typeof obj1[i] === 'object' && typeof obj2[i] === 'object') tempres = deepEqual(obj1[i], obj2[i]);
+        else tempres = (obj1[i] === obj2[i]);
+
+        if (!tempres) return false;
+    }
+    
+    
+    return true;
+}
+
+
+console.log(deepEqual(newKim, kim));
