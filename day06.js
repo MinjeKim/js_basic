@@ -64,22 +64,22 @@
 //   printHong('Kil-dong');
 
 
-const weeks = ['일', '월', '화', '수', '목', '금', '토'];
-const getNextWeek = (() => {
-    let widx = -1;
-    return () => {
-        widx += 1; // side-effect!
-        if (widx >= weeks.length) widx = 0;
-        return `${weeks[widx]}요일`;
-    }
-})();
+// const weeks = ['일', '월', '화', '수', '목', '금', '토'];
+// const getNextWeek = (() => {
+//     let widx = -1;
+//     return () => {
+//         widx += 1; // side-effect!
+//         if (widx >= weeks.length) widx = 0;
+//         return `${weeks[widx]}요일`;
+//     }
+// })();
 
-let cnt = 0;
-const intl = setInterval(() => {
-    // widx += 2; // side-effect!
-    console.log('call', cnt, getNextWeek());
-    if ((cnt += 1) === 20) clearInterval(intl);
-}, 100);
+// let cnt = 0;
+// const intl = setInterval(() => {
+//     // widx += 2; // side-effect!
+//     console.log('call', cnt, getNextWeek());
+//     if ((cnt += 1) === 20) clearInterval(intl);
+// }, 100);
 
 
 // const weeks = ['일', '월', '화', '수', '목', '금', '토'];
@@ -123,4 +123,3 @@ const intl = setInterval(() => {
 //     // console.log('call', cnt, num, getNextWeek(num), intl._idleStart); 
 //     if ((cnt += 1) === 10) clearInterval(intl);
 // }, intervalTime);
-
