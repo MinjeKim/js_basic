@@ -30,43 +30,100 @@
 
 // for (let i of ar44.keys()) console.log(i);
 
-console.log("\n\n\n\n\n\n\n\n\n");
 
-const isNull = _v => _v === null || _v === undefined;
+
+
+// console.log(range(-5));        // [-5, -4, -3, -2, -1]
+// console.log(range(5, 5));      // [5]
+// console.log(range(5, 5, 0));   // [5]
+// console.log(range(5, 5, -1));  // [5]
+// console.log(range(1, 5, 6));   // [1]
+// const isNull = _v => _v === null || _v === undefined;
 const range = (start, end, add) => {
-    if (
-        isNull(start) ||                    // start가 비었을 때
-        (isNull(end) && !isNull(add)) ||    // end가 null, add가 값이 있을 때
-        add === 0                           // add가 0일 때
-    ) { 
-        return false;
+    if (start < 0) {
+        end = -1;
+    } else {
+        const tmp = start;
+        end = end ?? (start = 1, tmp);
     }
+    add = add ?? (end >= start ? 1 : -1);
+    add = add === -1 ? 1 : add;
     
+    if (start - end > add) return [];
     const res = [];
-    let condition = ""; // for문 조건식
-
-    if (isNull(end)) { // 매개변수에 값이 하나만 있을 때
-        end = start;
-        start = 1;
+    
+    let condition = ""; // 반복문 조건식
+    condition = end >= start ? "i <= end" : " i >= end";
+    
+    add = add === 0 ? 1 : add;
+    
+    let i = start;
+    while (eval(condition)) {
+        res.push(i);
+        i += add;
     }
-
-    add = isNull(add) ? (end > start ? 1 : -1) : add; // add가 비었을 때, end가 start보다 클 경우 1 할당, 작을경우 -1 할당
-    condition = end > start ? "i <= end" : " i >= end";
-
-    for (let i = start; eval(condition); i += add) res.push(i);
-    console.log(res);
+    return res;
 }
+// console.log(range(-5));        // [-5, -4, -3, -2, -1]
+// console.log(range(5, 5));      // [5]
+// console.log(range(5, 5, 0));   // [5]
+// console.log(range(5, 5, -1));  // [5]sc
+// console.log(range(5, 1, 1));   // []
+// console.log(range(1, 5, -1));  // []
+// console.log(range(1, 5, 6));   // [1]
 
-// range(1, 10, 1);  // [1, 2, 3, 4,  5, 6, 7, 8, 9, 10]
-// range(1, 10, 2);  // [1, 3, 5, 7, 9]
-// range(1, 10);     // [1, 2, 3, 4,  5, 6, 7, 8, 9, 10]
-// range(10, 1);     // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-// range(10, 1, -1); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-// range(10, 1, -2); // [ 10, 8, 6, 4, 2 ]
-// range(5);         // [1, 2, 3, 4, 5] 
-console.time(100);
-range(100);       // [1, 2, 3, 4, 5, …, 99, 100] 
-console.timeEnd(100);
+// console.log(range(1, 10, 1));    // [1, 2, 3, 4,  5, 6, 7, 8, 9, 10]
+// console.log(range(1, 10, 2));    // [1, 3, 5, 7, 9]
+// console.log(range(1, 10));       // [1, 2, 3, 4,  5, 6, 7, 8, 9, 10]
+// console.log(range(10, 1));       // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+// console.log(range(10, 1, -1));   // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+// console.log(range(10, 1, -2));   // [ 10, 8, 6, 4, 2 ]
+// console.log(range(5));           // [1, 2, 3, 4, 5] 
+// console.time(100);
+// console.log(range(100));         // [1, 2, 3, 4, 5, …, 99, 100] 
+// console.timeEnd(100);
+// console.log(range(5, 5));  
+// console.log(range(0));  
 // console.log();
 
-console.log();
+// console.log([1,2,3].pop());
+
+console.log("\n\n\n\n\n");
+const makeReverseArray = arr => { // if 줄이고 while 줄이고
+    let result = [];
+    let i = 0;
+    let mid = Math.trunc(arr.length/2);
+    
+    if (arr.length%2 !== 0) { // [1,2,3,4,5]
+        i = 1;
+        result.push(arr[mid]);
+        while (true) {
+            result.unshift(arr[mid + i]);
+            result.push(arr[mid - i++]);
+            if (result.length !== arr.length) break;
+        }
+    } else { // [1,2,3,4,5,6]
+        while (true) {
+            result.unshift(arr[mid + i++]);
+            result.push(arr[mid - i]);
+            if (result.length !== arr.length) break;
+        }
+    }
+
+    return result;
+}
+
+const reverseArray = arr => {
+    for (let i = 0; i < arr.length/2; i += 1) {
+        [arr[i], arr[arr.length - i-1]] = [arr[arr.length - i-1], arr[i]];
+    }
+    return arr;
+};
+
+// ex) 순수 함수
+const a11 = [1, 2, 3, 4, 5];
+console.log(makeReverseArray(a11), a11);
+
+// ex2) 비순수 함수
+const a22 = [1, 2, 3, 4, 5];
+console.log(reverseArray(a22), a22);
